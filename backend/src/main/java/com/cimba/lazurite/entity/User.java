@@ -1,27 +1,32 @@
 package com.cimba.lazurite.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
+
 
 @Entity
 @Table(name = "User")
 public class User {
     @Id
-    Long idUser;
-    int idRole;
-    String login;
-    String email;
-    String passwordHash;
-    Date registrtionDate;
+    @Column(name = "id_user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idUser;
+    @Column(name = "id_role")
+    private int idRole;
+    @Column(name = "login")
+    private String login;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password_hash")
+    private String passwordHash;
+    @Column(name = "registration_date")
+    private Date registrationDate;
 
-    public Long getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(Long idUser) {
+    public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
@@ -58,10 +63,10 @@ public class User {
     }
 
     public Date getRegistrtionDate() {
-        return registrtionDate;
+        return registrationDate;
     }
 
-    public void setRegistrtionDate(Date registrtionDate) {
-        this.registrtionDate = registrtionDate;
+    public void setRegistrationDate(Date registrtionDate) {
+        this.registrationDate = registrtionDate;
     }
 }
