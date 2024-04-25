@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Lazurite
+  datasource:
+    url: jdbc:postgresql://postgres:5432/postgres
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PW}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
