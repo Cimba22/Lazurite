@@ -12,7 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
     @Column(name = "id_role")
-    private int idRole;
+    private Integer idRole;
     @Column(name = "login")
     private String login;
     @Column(name = "email")
@@ -21,6 +21,14 @@ public class User {
     private String passwordHash;
     @Column(name = "registration_date")
     private Date registrationDate;
+
+    public void setIdRole(Integer idRole) {
+        this.idRole = idRole;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
 
     public Integer getIdUser() {
         return idUser;
