@@ -1,8 +1,17 @@
 package com.cimba.lazurite.entity.dto;
 
 public class UserDto {
+    private Long idUser;
     private String email;
     private String password;
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
 
     public String getEmail() {
         return email;

@@ -1,6 +1,8 @@
 package com.cimba.lazurite.controller;
 
 import com.cimba.lazurite.entity.dto.UserDto;
+import com.cimba.lazurite.exception.RegistrationException;
+import com.cimba.lazurite.exception.UserNotFoundException;
 import com.cimba.lazurite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import java.util.List;
  * REST controller for managing users.
  */
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
@@ -28,13 +31,9 @@ public class UserController {
      * @return a response entity indicating success or failure
      */
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto){
-        try {
-            userService.registerUser(userDto);
-            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
-        }catch (Exception e) {  //RegistrationException
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+        userService.registerUser(userDto);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
     /**
@@ -43,11 +42,9 @@ public class UserController {
      * @return a list of all users
      */
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userService.getAllUsers();
-        return users != null && !users.isEmpty()
-                ? new ResponseEntity<>(users, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     /**
@@ -57,15 +54,10 @@ public class UserController {
      * @return the user data
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId){
-        try {
-            final UserDto userDto = userService.getUserById(userId);
-            return new ResponseEntity<>(userDto, HttpStatus.OK);
-        }catch (Exception e) {  //UserNotFoundException
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
+        UserDto userDto = userService.getUserById(userId);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
-
     /**
      * Endpoint for updating user data.
      *
@@ -74,13 +66,9 @@ public class UserController {
      * @return a response entity indicating success or failure
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto){
-        try {
-            userService.updateUser(userId,userDto);
-            return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
-        } catch (Exception e) {     //UserNotFoundException
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+        userService.updateUser(userId, userDto);
+        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
     /**
@@ -91,12 +79,8 @@ public class UserController {
      */
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        try {
-            userService.deleteUser(userId);
-            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
-        } catch ( Exception e) {    //UserNotFoundException
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
 
 

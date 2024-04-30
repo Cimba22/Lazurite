@@ -1,6 +1,8 @@
 package com.cimba.lazurite.service;
 
 import com.cimba.lazurite.entity.dto.UserDto;
+import com.cimba.lazurite.exception.RegistrationException;
+import com.cimba.lazurite.exception.UserNotFoundException;
 
 import java.util.List;
 

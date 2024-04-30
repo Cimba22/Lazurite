@@ -2,6 +2,8 @@ package com.cimba.lazurite.service;
 
 import com.cimba.lazurite.entity.User;
 import com.cimba.lazurite.entity.dto.UserDto;
+import com.cimba.lazurite.exception.RegistrationException;
+import com.cimba.lazurite.exception.UserNotFoundException;
 import com.cimba.lazurite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,25 +33,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto getUserById(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
+    public UserDto getUserById(Long idUser) {
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + idUser + " not found"));
         return mapToDto(user);
     }
 
     @Override
-    public void updateUser(Long userId, UserDto userDto) throws UserNotFoundException {
+    public void updateUser(Long idUser, UserDto userDto) throws UserNotFoundException {
         // Implementation of updating a user
     }
 
     @Override
-    public void deleteUser(Long userId) throws UserNotFoundException {
+    public void deleteUser(Long idUser) throws UserNotFoundException {
         // Implementation of deleting a user
     }
 
     private UserDto mapToDto(User user) {
         UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
+        userDto.setIdUser(user.getIdUser());
         userDto.setEmail(user.getEmail());
         return userDto;
     }
