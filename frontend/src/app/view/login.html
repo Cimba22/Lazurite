@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;900&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="../public/css/hello-page.css"> -->
+    <link rel="stylesheet" href="../../assets/css/component/forall.css">
+    <link rel="stylesheet" href="../../assets/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+
+    <main class="flex min-h-full flex-col justify-center">
+        <div class="flex min-h-full flex-col justify-center px-6">
+
+            <div class="py-6 max-w-24 w-full mx-auto">
+
+                <div class="flex justify-center pb-8">
+                    <a class="text-3xl pb-1" href="#">Lazurite</a>
+                </div>
+
+                <h1 class="mb-6 text-center text-3xl font-medium">Sign in to your account</h1>
+
+                <div class="message-container mb-2">
+                    <div class="text-green-400 text-sm text-center p-2 rounded border border-green-900 bg-green-950"
+                    style="display: none;"></div>
+                    <div class="text-red-400 text-sm text-center p-2 rounded border border-red-900 bg-red-950"
+                    style="display: none;"></div>
+                </div>
+
+                <form class="space-y-3">
+                    <div>
+                        <label class="input-label" for="labeled-input-email">Email</label>
+                        <input class="block input w-full" type="email" id="labeled-input-email" autofocus>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="input-label" for="labeled-input-password">Password</label>
+                            <span class="font-medium text-sm">
+                                <a href="#" class="text-accent" tabindex="-1">Forgot password?</a>
+                            </span>
+                        </div>
+                        <input class="block input w-full" type="password" id="labeled-input-password">
+                    </div>
+
+                    <div style="display: none;">
+                        <label class="input-label" for="labeled-input-mfa">2-factor authentication code</label>
+                        <input class="block input w-full" type="text" inputmode="numeric" placeholder="000000" autocomplete="one-time-code" id="labeled-input-mfa">
+                    </div>
+
+                    <div></div>
+
+                    <p>
+                        <button type="button" class="font-medium text-sm text-accent " style="display: none;">Use recovery code</button>
+                    </p>
+
+                    <div class="pt-2">
+                        <button class="button button-primary w-full mt-4">Sign in</button>
+                    </div>
+                </form>
+
+                <div class="my-8 leading-6 font-medium text-sm">
+                    <p class="text-center text-muted">Don't have an account?
+                        <a href="#" class="text-accent">Create an account</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
