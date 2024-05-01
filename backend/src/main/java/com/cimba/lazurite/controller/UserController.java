@@ -30,7 +30,7 @@ public class UserController {
      * @param userDto the user data
      * @return a response entity indicating success or failure
      */
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
         userService.registerUser(userDto);
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);

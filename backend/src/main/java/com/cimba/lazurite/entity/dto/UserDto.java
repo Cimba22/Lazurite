@@ -1,9 +1,37 @@
 package com.cimba.lazurite.entity.dto;
 
+import java.util.Date;
+
 public class UserDto {
     private Long idUser;
+    private String login;
     private String email;
-    private String password;
+    private String passwordHash;
+    private Date registrationDate;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
     public Long getIdUser() {
         return idUser;
@@ -21,11 +49,4 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

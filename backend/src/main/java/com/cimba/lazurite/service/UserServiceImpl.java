@@ -8,6 +8,7 @@ import com.cimba.lazurite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void registerUser(UserDto userDto) throws RegistrationException {
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new RegistrationException("User with email " + userDto.getEmail() + " already exists");
+        }
 
+        User user = new User();
+        user.setLogin(userDto.getLogin());
+        user.setEmail(userDto.getEmail());
+        user.setPasswordHash(userDto.getPasswordHash());
+        user.setRegistrationDate(new Date());
+
+        userRepository.save(user);
     }
 
     @Override
@@ -41,12 +52,23 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(Long idUser, UserDto userDto) throws UserNotFoundException {
-        // Implementation of updating a user
+        User existingUser = userRepository.findById(idUser)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + idUser + " not found"));
+
+        existingUser.setLogin(userDto.getLogin());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setPasswordHash(userDto.getPasswordHash());
+
+        userRepository.save(existingUser);
     }
 
     @Override
     public void deleteUser(Long idUser) throws UserNotFoundException {
-        // Implementation of deleting a user
+        if (!userRepository.existsById(idUser)) {
+            throw new UserNotFoundException("User with id " + idUser + " not found");
+        }
+
+        userRepository.deleteById(idUser);
     }
 
     private UserDto mapToDto(User user) {

@@ -26,10 +26,6 @@ public class User {
         this.idRole = idRole;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
     public Long getIdUser() {
         return idUser;
     }
@@ -70,7 +66,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public Date getRegistrtionDate() {
+    public Date getRegistrationDate() {
         return registrationDate;
     }
 
