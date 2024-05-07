@@ -14,8 +14,9 @@ import java.util.List;
 /**
  * REST controller for managing users.
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/")
 public class UserController {
     private final UserService userService;
 

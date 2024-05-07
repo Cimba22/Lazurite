@@ -5,10 +5,9 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User {
     @Id
-    @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
     @Column(name = "id_role")
