@@ -26,3 +26,7 @@ services:
       dockerfile: ./docker/angular/Dockerfile
     ports:
       - "80:80"
+    depends_on:
+      - spring-backend
+    volumes:
+      - ./logs/nginx:/var/log/nginx
