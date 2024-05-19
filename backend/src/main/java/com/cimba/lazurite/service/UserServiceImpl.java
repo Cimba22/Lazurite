@@ -1,25 +1,48 @@
 package com.cimba.lazurite.service;
 
+import com.cimba.lazurite.entity.Role;
 import com.cimba.lazurite.entity.User;
+import com.cimba.lazurite.entity.UserRole;
 import com.cimba.lazurite.entity.dto.UserDto;
 import com.cimba.lazurite.exception.RegistrationException;
 import com.cimba.lazurite.exception.UserNotFoundException;
+import com.cimba.lazurite.repository.RoleRepository;
 import com.cimba.lazurite.repository.UserRepository;
+import com.cimba.lazurite.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, UserRoleRepository userRoleRepository){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
+    }
+
+    @Override
+    public Role getUserRole(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            var userObj = user.get();
+            return (Role) userObj.getRoleSet();
+        }else {
+            throw new UsernameNotFoundException(email);
+        }
     }
 
     @Override
@@ -28,11 +51,13 @@ public class UserServiceImpl implements UserService{
             throw new RegistrationException("User with email " + userDto.getEmail() + " already exists");
         }
 
-        User user = new User();
-        user.setLogin(userDto.getLogin());
-        user.setEmail(userDto.getEmail());
-        user.setPasswordHash(userDto.getPasswordHash());
-        user.setRegistrationDate(new Date());
+        User user = User.builder()
+                .login(userDto.getLogin())
+                .email(userDto.getEmail())
+                .passwordHash(passwordEncoder.encode(userDto.getPasswordHash()))
+                .build();
+
+
 
         userRepository.save(user);
     }
@@ -72,9 +97,11 @@ public class UserServiceImpl implements UserService{
     }
 
     private UserDto mapToDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setIdUser(user.getIdUser());
-        userDto.setEmail(user.getEmail());
-        return userDto;
+        return UserDto.builder()
+                .idUser(user.getIdUser())
+                .login(user.getLogin())
+                .email(user.getEmail())
+                .registrationDate(user.getRegistrationDate())
+                .build();
     }
 }

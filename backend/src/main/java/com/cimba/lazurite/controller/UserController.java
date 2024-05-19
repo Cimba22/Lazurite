@@ -16,7 +16,7 @@ import java.util.List;
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/users/")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
@@ -25,17 +25,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    /**
-     * Endpoint for registering a new user.
-     *
-     * @param userDto the user data
-     * @return a response entity indicating success or failure
-     */
-    @PostMapping("/registration")
-    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
-        userService.registerUser(userDto);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
-    }
+//    /**
+//     * Endpoint for registering a new user.
+//     *
+//     * @param userDto the user data
+//     * @return a response entity indicating success or failure
+//     */
+//    @PostMapping("/registration")
+//    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+//        userService.registerUser(userDto);
+//        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+//    }
 
     /**
      * Endpoint for retrieving all users.

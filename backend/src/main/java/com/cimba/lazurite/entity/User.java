@@ -1,17 +1,41 @@
 package com.cimba.lazurite.entity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.security.auth.Subject;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
-public class User {
+@EntityListeners(AuditingEntityListener.class)
+public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
-    @Column(name = "id_role")
-    private Integer idRole;
+
     @Column(name = "login")
     private String login;
     @Column(name = "email")
@@ -21,55 +45,69 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    public void setIdRole(Integer idRole) {
-        this.idRole = idRole;
-    }
+//    TODO Сделать поля в таблице user
+    private boolean accountLocked;
+    private boolean enabled;
 
-    public Long getIdUser() {
-        return idUser;
-    }
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDate createDate;
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDate lastModifiedDate;
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
 
-    public int getIdRole() {
-        return idRole;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_role")
+    )
+    private Set<Role> roleSet;
 
-    public void setIdRole(int idRole) {
-        this.idRole = idRole;
-    }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getName() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roleSet
+                .stream()
+                .map(r -> new SimpleGrantedAuthority(r.getRoleName()))
+                .collect(Collectors.toList());
     }
 
-    public String getPasswordHash() {
+    @Override
+    public String getPassword() {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setRegistrationDate(Date registrtionDate) {
-        this.registrationDate = registrtionDate;
+    @Override
+    public boolean isAccountNonLocked() {
+        return !accountLocked;
     }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+
 }

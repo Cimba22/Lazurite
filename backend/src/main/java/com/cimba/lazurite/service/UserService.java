@@ -1,5 +1,6 @@
 package com.cimba.lazurite.service;
 
+import com.cimba.lazurite.entity.Role;
 import com.cimba.lazurite.entity.dto.UserDto;
 import com.cimba.lazurite.exception.RegistrationException;
 import com.cimba.lazurite.exception.UserNotFoundException;
@@ -10,6 +11,9 @@ import java.util.List;
  * Service interface for managing users.
  */
 public interface UserService {
+
+    Role getUserRole(String username);
+
     /**
      * Registers a new user.
      *
@@ -49,5 +53,6 @@ public interface UserService {
      * @throws UserNotFoundException if the user with the specified identifier is not found
      */
     void deleteUser(Long userId) throws UserNotFoundException;
+
 }
 
