@@ -5,22 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.security.auth.Subject;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -42,11 +37,9 @@ public class User implements UserDetails, Principal {
     private String email;
     @Column(name = "password_hash")
     private String passwordHash;
-    @Column(name = "registration_date")
-    private Date registrationDate;
-
-//    TODO Сделать поля в таблице user
+    @Column(name = "account_locked")
     private boolean accountLocked;
+    @Column(name = "enabled")
     private boolean enabled;
 
     @CreatedDate
@@ -58,12 +51,7 @@ public class User implements UserDetails, Principal {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
-    )
-    private Set<Role> roleSet;
+    private List<Role> roles;
 
 
     @Override
@@ -73,7 +61,7 @@ public class User implements UserDetails, Principal {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roleSet
+        return this.roles
                 .stream()
                 .map(r -> new SimpleGrantedAuthority(r.getRoleName()))
                 .collect(Collectors.toList());
