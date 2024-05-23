@@ -1,5 +1,6 @@
 package com.cimba.lazurite.controller;
 
+import com.cimba.lazurite.config.JwtService;
 import com.cimba.lazurite.email.EmailService;
 import com.cimba.lazurite.email.EmailTemplateName;
 import com.cimba.lazurite.entity.User;
@@ -8,13 +9,18 @@ import com.cimba.lazurite.repository.RoleRepository;
 import com.cimba.lazurite.repository.TokenRepository;
 import com.cimba.lazurite.repository.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -25,9 +31,11 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
-
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
+
 
     public void register(RegistrationRequest request) throws MessagingException {
         var role = roleRepository.findByRoleName("USER")
@@ -46,15 +54,13 @@ public class AuthenticationService {
 
     private void sendValidationEmail(User user) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
-
-        emailService.sendEmail(
-                user.getEmail(),
-                user.getUsername(),
-                EmailTemplateName.ACTIVATE_ACCOUNT,
-                activationUrl,
-                newToken,
-                "Account activation");
-
+            emailService.sendEmail(
+                    user.getEmail(),
+                    user.getLogin(),
+                    EmailTemplateName.ACTIVATE_ACCOUNT,
+                    activationUrl,
+                    newToken,
+                    "Account activation");
     }
 
     private String generateAndSaveActivationToken(User user) {
@@ -62,7 +68,7 @@ public class AuthenticationService {
         var token = Token.builder()
                 .token(generatedToken)
                 .createdAt(LocalDateTime.now())
-                .expiresAt(LocalDateTime.now().plusMinutes(15))
+                .expiresAt(LocalDateTime.now().plusMinutes(180))
                 .user(user)
                 .build();
         tokenRepository.save(token);
@@ -78,5 +84,35 @@ public class AuthenticationService {
             codeBuilder.append(characters.charAt(randomIndex));
         }
         return codeBuilder.toString();
+    }
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPasswordHash()
+                )
+        );
+        var claims = new HashMap<String, Object>();
+        var user = ((User)auth.getPrincipal());
+        claims.put("Login", user.getLogin());
+        var jwtToken = jwtService.generateToken(claims, (User) auth.getPrincipal());
+        return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    @Transactional
+    public void activateAccount(String token) throws MessagingException {
+        Token saveToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid token"));
+        if(LocalDateTime.now().isAfter(saveToken.getExpiresAt())){
+            sendValidationEmail(saveToken.getUser());
+            throw new RuntimeException("Activation token has expired. A new token has been sent.");
+        }
+        var user = userRepository.findById(saveToken.getUser().getIdUser())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setEnabled(true);
+        userRepository.save(user);
+        saveToken.setValidatedAt(LocalDateTime.now());
+        tokenRepository.save(saveToken);
     }
 }

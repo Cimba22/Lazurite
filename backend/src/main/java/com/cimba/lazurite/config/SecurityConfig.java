@@ -50,18 +50,4 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
-
-
-//    return httpSecurity
-//            .csrf(AbstractHttpConfigurer::disable)
-//            .authorizeHttpRequests(registry -> {
-//        registry.requestMatchers("/home", "/register/**").permitAll();
-//        registry.requestMatchers("/admin/**").hasRole("ADMIN");
-//        registry.requestMatchers("/user/**").hasRole("USER");
-//        registry.anyRequest().authenticated();
-//    })
-//            .formLogin(httpSecurityFormLoginConfigurer -> {
-//        httpSecurityFormLoginConfigurer.loginPage("/login").permitAll();
-//    })
-//            .build();
 }
