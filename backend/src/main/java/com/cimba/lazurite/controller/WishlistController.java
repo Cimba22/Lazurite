@@ -1,16 +1,14 @@
 package com.cimba.lazurite.controller;
 
 import com.cimba.lazurite.entity.dto.WishlistRequest;
+import com.cimba.lazurite.entity.dto.WishlistResponse;
 import com.cimba.lazurite.service.WishlistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("wishlists")
@@ -25,5 +23,10 @@ public class WishlistController {
             Authentication connectedUser
     ){
         return ResponseEntity.ok(service.save(request, connectedUser));
+    }
+
+    @GetMapping("{wishlist-id}")
+    public ResponseEntity<WishlistResponse> findWishlistById(@PathVariable("wishlist-id") Long id){
+        return ResponseEntity.ok(service.findById(id));
     }
 }
