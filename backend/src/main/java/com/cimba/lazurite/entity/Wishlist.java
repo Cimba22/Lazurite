@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -15,19 +17,19 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "gift")
-public class Gift extends BaseEntity {
+@Table(name = "wishlist")
+public class Wishlist extends BaseEntity {
 
     private String name;
-    private String image;
     private String description;
-    private Boolean archived;
-    private Boolean completed;
-
+    private String image;
 
     @ManyToOne
-    @JoinColumn(name = "wishlist_id")
-    private Wishlist wishlist;
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @OneToMany(mappedBy = "wishlist")
+    private List<Gift> gifts;
 
 
 }
