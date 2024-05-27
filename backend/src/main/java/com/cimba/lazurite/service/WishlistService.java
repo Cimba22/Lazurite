@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.cimba.lazurite.service.WishlistSpecification.withOwnerId;
+
 @Service
 @RequiredArgsConstructor
 public class WishlistService {
@@ -39,6 +41,24 @@ public class WishlistService {
         User user = ((User) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<Wishlist> wishlists = wishlistRepository.findAllDisplayableWishlists(pageable, user.getIdUser());
+        List<WishlistResponse> wishlistResponse = wishlists.stream()
+                .map(wishlistMapper::toWishlistResponse)
+                .toList();
+        return new PageResponse<>(
+                wishlistResponse,
+                wishlists.getNumber(),
+                wishlists.getSize(),
+                wishlists.getTotalElements(),
+                wishlists.getTotalPages(),
+                wishlists.isFirst(),
+                wishlists.isLast()
+        );
+    }
+
+    public PageResponse<WishlistResponse> findAllWishlistsByOwner(int page, int size, Authentication connectedUser) {
+        User user = ((User) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<Wishlist> wishlists = wishlistRepository.findAll(withOwnerId(user.getIdUser()), pageable);
         List<WishlistResponse> wishlistResponse = wishlists.stream()
                 .map(wishlistMapper::toWishlistResponse)
                 .toList();
