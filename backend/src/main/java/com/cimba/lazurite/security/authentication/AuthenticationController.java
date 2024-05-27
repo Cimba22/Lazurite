@@ -1,4 +1,4 @@
-package com.cimba.lazurite.controller;
+package com.cimba.lazurite.security.authentication;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;

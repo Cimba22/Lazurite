@@ -1,4 +1,4 @@
-package com.cimba.lazurite.entity.token;
+package com.cimba.lazurite.security.token;
 
 import com.cimba.lazurite.entity.User;
 import jakarta.persistence.*;

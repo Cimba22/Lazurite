@@ -1,6 +1,6 @@
 package com.cimba.lazurite.repository;
 
-import com.cimba.lazurite.entity.token.Token;
+import com.cimba.lazurite.security.token.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

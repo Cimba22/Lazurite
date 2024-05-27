@@ -1,4 +1,4 @@
-package com.cimba.lazurite.service;
+package com.cimba.lazurite.entity.common;
 
 import lombok.*;
 

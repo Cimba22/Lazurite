@@ -1,4 +1,4 @@
-package com.cimba.lazurite.service;
+package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.Wishlist;
 import org.springframework.data.jpa.domain.Specification;

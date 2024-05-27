@@ -1,4 +1,4 @@
-package com.cimba.lazurite.controller;
+package com.cimba.lazurite.security.authentication;
 
 import lombok.Builder;
 import lombok.Getter;

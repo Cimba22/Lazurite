@@ -1,4 +1,4 @@
-package com.cimba.lazurite.entity.dto;
+package com.cimba.lazurite.wishlist;
 
 import lombok.*;
 

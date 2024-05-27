@@ -1,10 +1,10 @@
-package com.cimba.lazurite.controller;
+package com.cimba.lazurite.security.authentication;
 
-import com.cimba.lazurite.config.JwtService;
+import com.cimba.lazurite.security.config.JwtService;
 import com.cimba.lazurite.email.EmailService;
 import com.cimba.lazurite.email.EmailTemplateName;
 import com.cimba.lazurite.entity.User;
-import com.cimba.lazurite.entity.token.Token;
+import com.cimba.lazurite.security.token.Token;
 import com.cimba.lazurite.repository.RoleRepository;
 import com.cimba.lazurite.repository.TokenRepository;
 import com.cimba.lazurite.repository.UserRepository;

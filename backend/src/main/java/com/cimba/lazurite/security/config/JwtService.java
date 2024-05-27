@@ -1,4 +1,4 @@
-package com.cimba.lazurite.config;
+package com.cimba.lazurite.security.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

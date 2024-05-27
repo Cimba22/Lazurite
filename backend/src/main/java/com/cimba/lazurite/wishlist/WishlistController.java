@@ -1,9 +1,6 @@
-package com.cimba.lazurite.controller;
+package com.cimba.lazurite.wishlist;
 
-import com.cimba.lazurite.entity.dto.WishlistRequest;
-import com.cimba.lazurite.entity.dto.WishlistResponse;
-import com.cimba.lazurite.service.PageResponse;
-import com.cimba.lazurite.service.WishlistService;
+import com.cimba.lazurite.entity.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

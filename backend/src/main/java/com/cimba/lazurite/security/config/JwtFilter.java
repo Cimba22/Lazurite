@@ -1,4 +1,4 @@
-package com.cimba.lazurite.config;
+package com.cimba.lazurite.security.config;
 
 
 import jakarta.servlet.FilterChain;

@@ -1,8 +1,6 @@
-package com.cimba.lazurite.service;
+package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.Wishlist;
-import com.cimba.lazurite.entity.dto.WishlistRequest;
-import com.cimba.lazurite.entity.dto.WishlistResponse;
 import org.springframework.stereotype.Service;
 
 @Service

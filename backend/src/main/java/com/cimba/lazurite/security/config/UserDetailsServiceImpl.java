@@ -1,4 +1,4 @@
-package com.cimba.lazurite.service;
+package com.cimba.lazurite.security.config;
 
 import com.cimba.lazurite.repository.UserRepository;
 import jakarta.transaction.Transactional;

@@ -1,10 +1,9 @@
-package com.cimba.lazurite.service;
+package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.User;
 import com.cimba.lazurite.entity.Wishlist;
-import com.cimba.lazurite.entity.dto.WishlistRequest;
-import com.cimba.lazurite.entity.dto.WishlistResponse;
 import com.cimba.lazurite.repository.WishlistRepository;
+import com.cimba.lazurite.entity.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.cimba.lazurite.service.WishlistSpecification.withOwnerId;
+import static com.cimba.lazurite.wishlist.WishlistSpecification.withOwnerId;
 
 @Service
 @RequiredArgsConstructor
