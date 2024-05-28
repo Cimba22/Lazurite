@@ -53,6 +53,8 @@ public class User implements UserDetails, Principal {
     private List<Role> roles;
     @OneToMany(mappedBy = "owner")
     private List<Wishlist> wishlists;
+    @OneToMany(mappedBy = "owner")
+    private List<Gift> gifts;
 
 
     @Override

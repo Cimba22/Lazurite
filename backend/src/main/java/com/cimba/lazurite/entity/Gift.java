@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -28,6 +30,12 @@ public class Gift extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+
 
 
 }
