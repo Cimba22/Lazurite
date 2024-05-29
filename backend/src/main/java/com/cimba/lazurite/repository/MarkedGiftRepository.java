@@ -1,4 +1,4 @@
-package com.cimba.lazurite.repository;
-
-public class MarkedGiftRepository {
-}
+//package com.cimba.lazurite.repository;
+//
+//public class MarkedGiftRepository {
+//}

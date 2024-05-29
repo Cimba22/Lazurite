@@ -1,4 +1,4 @@
-package com.cimba.lazurite.repository;
-
-public class ListRoleRepository {
-}
+//package com.cimba.lazurite.repository;
+//
+//public class ListRoleRepository {
+//}
