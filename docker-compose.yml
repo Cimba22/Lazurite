@@ -28,11 +28,11 @@ services:
 
   angular-frontend:
     build:
-      context: ./frontend
+      context: ./frontend-ui
       dockerfile: ./docker/angular/Dockerfile
     ports:
-      - "80:80"
+      - "4200:4200"
     depends_on:
       - spring-backend
-    volumes:
-      - ./logs/nginx:/var/log/nginx
+#    volumes:
+#      - ./logs/nginx:/var/log/nginx
