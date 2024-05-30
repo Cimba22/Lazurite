@@ -1,7 +1,9 @@
 package com.cimba.lazurite.gift;
 
 import com.cimba.lazurite.entity.Gift;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GiftMapper {
     public Gift toGift(GiftRequest request) {
         return Gift.builder()

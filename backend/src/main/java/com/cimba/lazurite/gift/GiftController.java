@@ -1,7 +1,6 @@
 package com.cimba.lazurite.gift;
 
 import com.cimba.lazurite.entity.common.PageResponse;
-import com.cimba.lazurite.wishlist.WishlistResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,4 +45,17 @@ public class GiftController {
     ){
         return ResponseEntity.ok(service.findAllGiftsByOwner(page, size, connectedUser));
     }
+
+
+    @GetMapping("/archived")
+    public ResponseEntity<PageResponse<GiftResponse>> findAllArchivedGifts(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            Authentication connectedUser
+    ){
+        return ResponseEntity.ok(service.findAllArchivedGifts(page, size, connectedUser));
+    }
+
+    //TODO updateArchivedStatus
+
 }

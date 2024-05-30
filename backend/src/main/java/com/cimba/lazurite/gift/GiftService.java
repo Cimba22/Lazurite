@@ -73,4 +73,11 @@ public class GiftService {
                 gifts.isLast()
         );
     }
+
+    public PageResponse<GiftResponse> findAllArchivedGifts(int page, int size, Authentication connectedUser) {
+        User user = ((User) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        //TODO пересмотреть связи, возможно добавить таблицу с историей
+        return null;
+    }
 }
