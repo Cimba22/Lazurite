@@ -1,0 +1,8 @@
+<div class="main-content">
+  <h2> Wishlist </h2>
+  <hr>
+
+  <div class="flex flex-col justify-start flex-wrap gap-3 ">
+    <span *ngFor="let wishlist of wishlistResponse.content">{{wishlist.name}}</span>
+  </div>
+</div>
