@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'activate-account',
     component: ActivateAccountComponent
+  },
+  {
+    path: 'wishlists',
+    loadChildren: () => import('./modules/wishlist/wishlist.module').then(m => m.WishlistModule)
   }
 ];
 

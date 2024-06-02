@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "font-awesome/css/font-awesome.min.css";
+/* src/styles.css */
+@import '@fortawesome/fontawesome-free/css/all.css';
+
 
 @font-face {
   font-family: Roboto;
@@ -7,6 +9,9 @@
 
 body{
   margin: 0;
+}
+a{
+  text-decoration: none;
 }
 
 .justify-between {
@@ -317,4 +322,9 @@ body{
   line-height: 1.5rem;
 }
 
+/*icons*/
+.fa-solid{
+  color: white;
+  padding-right: 0.5rem;
+}
 
