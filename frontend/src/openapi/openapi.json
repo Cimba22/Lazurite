@@ -101,6 +101,55 @@
         }
       }
     },
+    "/wishlists/cover/{wishlist-id}": {
+      "post": {
+        "tags": [
+          "Wishlist"
+        ],
+        "operationId": "uploadWishlistCoverPicture",
+        "parameters": [
+          {
+            "name": "wishlist-id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/gifts": {
       "get": {
         "tags": [
