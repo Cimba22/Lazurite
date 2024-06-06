@@ -1,3 +1,10 @@
+body{
+  color: #04040B;
+}
+
+i{
+  cursor: pointer;
+}
 .card {
   border: 1px solid #04366b;
   border-radius: 0.25rem;
@@ -7,16 +14,20 @@
 
 .card-header {
   background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #082849;
   padding: 0.75rem 1.25rem;
 }
 
+
 .card-body {
-  padding: 1.25rem;
+  background-color: #a1b0ea;
+  padding: 0.25rem;
+  overflow-y: auto;
+  max-height: 300px;
 }
 
 .card-footer {
-  background-color: #f8f9fa;
+  background-color: #07294b;
   border-top: 1px solid #001a61;
   padding: 0.75rem 1.25rem;
 }
@@ -25,4 +36,11 @@
   width: 100%;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+
 }
