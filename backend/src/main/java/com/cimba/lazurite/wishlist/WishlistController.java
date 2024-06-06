@@ -1,12 +1,14 @@
 package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.common.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("wishlists")
@@ -44,5 +46,16 @@ public class WishlistController {
             Authentication connectedUser
     ){
         return ResponseEntity.ok(service.findAllWishlistsByOwner(page, size, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{wishlist-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadWishlistCoverPicture(
+            @PathVariable("wishlist-id") Long wishlistId,
+            @RequestPart("file") MultipartFile file,
+            @Parameter()
+            Authentication connectedUser
+    ){
+        service.uploadWishlistCoverPicture(file, connectedUser, wishlistId);
+        return ResponseEntity.accepted().build();
     }
 }

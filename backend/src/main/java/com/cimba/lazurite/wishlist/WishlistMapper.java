@@ -1,6 +1,7 @@
 package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.Wishlist;
+import com.cimba.lazurite.file.FileUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +21,7 @@ public class WishlistMapper {
                 .name(wishlist.getName())
                 .description(wishlist.getDescription())
                 .owner(wishlist.getOwner().getLogin())
-                //.image()
+                .image(FileUtils.readFileFromLocation(wishlist.getImage()))
                 .build();
     }
 }

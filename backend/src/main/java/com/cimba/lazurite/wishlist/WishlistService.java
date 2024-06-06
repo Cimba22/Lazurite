@@ -2,8 +2,10 @@ package com.cimba.lazurite.wishlist;
 
 import com.cimba.lazurite.entity.User;
 import com.cimba.lazurite.entity.Wishlist;
+import com.cimba.lazurite.file.FileStorageService;
 import com.cimba.lazurite.repository.WishlistRepository;
 import com.cimba.lazurite.entity.common.PageResponse;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ import static com.cimba.lazurite.wishlist.WishlistSpecification.withOwnerId;
 public class WishlistService {
     private final WishlistRepository wishlistRepository;
     private final WishlistMapper wishlistMapper;
+    private FileStorageService fileStorageService;
 
     public Long save(WishlistRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
@@ -70,5 +74,14 @@ public class WishlistService {
                 wishlists.isFirst(),
                 wishlists.isLast()
         );
+    }
+
+    public void uploadWishlistCoverPicture(MultipartFile file, Authentication connectedUser, Long wishlistId) {
+        Wishlist wishlist = wishlistRepository.findById(wishlistId)
+                .orElseThrow(() -> new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+        User user = ((User) connectedUser.getPrincipal());
+        var wishlistCover = fileStorageService.saveFile(file, user.getIdUser());
+        wishlist.setImage(wishlistCover);
+        wishlistRepository.save(wishlist);
     }
 }
