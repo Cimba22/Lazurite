@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+
+.sidebar {
+  height: calc(100vh - 80px);
+  width: 200px; /* Width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  top: 80px;
+  left: 0;
+  background-color: #111; /* Black background color */
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a {
+  padding: 15px 25px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+}
+.sidebar a.active{
+  color: #1636A6;
+}
+
+.main-content {
+  margin-left: 200px; /* Same as the width of the sidebar */
+  padding: 20px;
+}
