@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 export class WishlistComponent implements OnInit{
   wishlistResponse: PageResponseWishlistResponse = {};
   page = 0;
-  size = 5;
+  size = 4;
   pages: any = [];
 
   constructor(

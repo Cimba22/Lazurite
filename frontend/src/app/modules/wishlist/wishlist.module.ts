@@ -8,6 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { ListComponent } from './components/list/list.component';
 import { WishlistCardComponent } from './components/wishlist-card/wishlist-card.component';
+import { MyGiftsComponent } from './pages/my-gifts/my-gifts.component';
+import { ManageWishlistComponent } from './pages/manage-wishlist/manage-wishlist.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { WishlistCardComponent } from './components/wishlist-card/wishlist-card.
     NavbarComponent,
     WishlistComponent,
     ListComponent,
-    WishlistCardComponent
+    WishlistCardComponent,
+    MyGiftsComponent,
+    ManageWishlistComponent
   ],
   imports: [
     CommonModule,

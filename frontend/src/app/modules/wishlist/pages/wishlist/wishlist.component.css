@@ -2,3 +2,45 @@
   margin-left: 200px; /* Same as the width of the sidebar */
   padding: 80px;
 }
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  border-radius: 0.25rem;
+}
+
+.page-item {
+  margin: 0 0.25rem;
+}
+
+.page-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  background-color: #07294b;
+  border: 1px solid #030f1c;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  color: #000000;
+  background-color: #2875c5;
+  border-color: #030f1c;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: default;
+  background-color: #fff;
+  border-color: #030f1c;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #061446;
+  background-color: #030b60;
+  border-color: #030b60;
+}
