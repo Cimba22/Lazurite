@@ -28,7 +28,7 @@ services:
 
   angular-frontend:
     build:
-      context: ./frontend-ui
+      context: ./frontend
       dockerfile: ./docker/angular/Dockerfile
     ports:
       - "4200:4200"
