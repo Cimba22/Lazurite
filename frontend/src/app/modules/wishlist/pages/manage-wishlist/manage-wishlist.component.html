@@ -1,0 +1,12 @@
+<div class="p-2 main-content">
+  <h2>Manage my wishlist</h2>
+  <hr>
+  <div class="message-container mb-2">
+
+    <div class="text-red-400 text-sm text-center p-2 rounded border border-red-900 bg-red-950" *ngIf="errorMsg.length">
+      <p *ngFor="let msg of errorMsg">{{msg}}</p>
+    </div>
+  </div>
+
+
+</div>
