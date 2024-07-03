@@ -25,10 +25,20 @@ public class WishlistController {
         return ResponseEntity.ok(service.save(request, connectedUser));
     }
 
+    @PutMapping("{wishlist-id}")
+    public ResponseEntity<WishlistResponse> updateWishlist(
+            @PathVariable("wishlist-id") Long id,
+            @Valid
+            @RequestBody WishlistRequest request,
+            Authentication connectedUser){
+            return ResponseEntity.ok(service.updateWishlist(id, request, connectedUser));
+    }
+
     @GetMapping("{wishlist-id}")
     public ResponseEntity<WishlistResponse> findWishlistById(@PathVariable("wishlist-id") Long id){
         return ResponseEntity.ok(service.findById(id));
     }
+
 
     @GetMapping
     public ResponseEntity<PageResponse<WishlistResponse>> findAllWishlists(

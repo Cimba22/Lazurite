@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,5 +84,22 @@ public class WishlistService {
         var wishlistCover = fileStorageService.saveFile(file, user.getIdUser());
         wishlist.setImage(wishlistCover);
         wishlistRepository.save(wishlist);
+    }
+
+    public WishlistResponse updateWishlist(Long wishlistId, WishlistRequest request, Authentication connectedUser) {
+        Wishlist wishlist = wishlistRepository.findById(wishlistId)
+                .orElseThrow(() -> new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+        User user = ((User) connectedUser.getPrincipal());
+        if (!wishlist.getOwner().getIdUser().equals(user.getIdUser())) {
+            throw new AccessDeniedException("You are not the owner of this wishlist");
+        }
+
+        if (request.name() != null) {
+            wishlist.setName(request.name());
+        }
+        if (request.description() != null) {
+            wishlist.setDescription(request.description());
+        }
+        return null;
     }
 }
