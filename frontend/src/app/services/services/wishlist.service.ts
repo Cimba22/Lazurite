@@ -18,6 +18,8 @@ import { FindWishlistById$Params } from '../fn/wishlist/find-wishlist-by-id';
 import { PageResponseWishlistResponse } from '../models/page-response-wishlist-response';
 import { saveWishlist } from '../fn/wishlist/save-wishlist';
 import { SaveWishlist$Params } from '../fn/wishlist/save-wishlist';
+import { uploadWishlistCoverPicture } from '../fn/wishlist/upload-wishlist-cover-picture';
+import { UploadWishlistCoverPicture$Params } from '../fn/wishlist/upload-wishlist-cover-picture';
 import { WishlistResponse } from '../models/wishlist-response';
 
 @Injectable({ providedIn: 'root' })
@@ -73,6 +75,35 @@ export class WishlistService extends BaseService {
   saveWishlist(params: SaveWishlist$Params, context?: HttpContext): Observable<number> {
     return this.saveWishlist$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
+    );
+  }
+
+  /** Path part for operation `uploadWishlistCoverPicture()` */
+  static readonly UploadWishlistCoverPicturePath = '/wishlists/cover/{wishlist-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `uploadWishlistCoverPicture()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadWishlistCoverPicture$Response(params: UploadWishlistCoverPicture$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return uploadWishlistCoverPicture(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `uploadWishlistCoverPicture$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadWishlistCoverPicture(params: UploadWishlistCoverPicture$Params, context?: HttpContext): Observable<{
+}> {
+    return this.uploadWishlistCoverPicture$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
     );
   }
 

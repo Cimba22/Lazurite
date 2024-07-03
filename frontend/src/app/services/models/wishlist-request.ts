@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface WishlistRequest {
-  description?: string;
+  description: string;
   id?: number;
-  image: string;
+  image?: string;
   name: string;
 }

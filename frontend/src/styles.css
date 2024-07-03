@@ -23,6 +23,10 @@ a{
 .justify-start {
   justify-content: start;
 }
+.justify-end {
+  justify-content: end;
+}
+
 
 .items-center {
   align-items: center;

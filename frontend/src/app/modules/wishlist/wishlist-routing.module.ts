@@ -4,6 +4,7 @@ import {MainComponent} from "./pages/main/main.component";
 import {WishlistComponent} from "./pages/wishlist/wishlist.component";
 import {MyGiftsComponent} from "./pages/my-gifts/my-gifts.component";
 import {ManageWishlistComponent} from "./pages/manage-wishlist/manage-wishlist.component";
+import {GiftsListComponent} from "./pages/gifts-list/gifts-list.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
       {
         path: 'manage/:wishlistId',
         component: ManageWishlistComponent
+      }
+      ,
+      {
+        path: 'gifts',
+        component: GiftsListComponent
       }
     ]
   }

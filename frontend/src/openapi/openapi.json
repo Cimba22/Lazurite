@@ -497,7 +497,7 @@
     "schemas": {
       "WishlistRequest": {
         "required": [
-          "image",
+          "description",
           "name"
         ],
         "type": "object",

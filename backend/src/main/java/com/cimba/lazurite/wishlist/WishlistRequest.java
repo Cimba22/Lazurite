@@ -8,9 +8,10 @@ public record WishlistRequest(
         @NotNull(message = "100")
         @NotEmpty(message = "100")
         String name,
-        String description,
         @NotNull(message = "101")
         @NotEmpty(message = "101")
+        String description,
+
         String image
 
 ) {

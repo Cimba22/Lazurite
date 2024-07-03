@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 import { WishlistRoutingModule } from './wishlist-routing.module';
 import { MainComponent } from './pages/main/main.component';
@@ -10,6 +11,7 @@ import { ListComponent } from './components/list/list.component';
 import { WishlistCardComponent } from './components/wishlist-card/wishlist-card.component';
 import { MyGiftsComponent } from './pages/my-gifts/my-gifts.component';
 import { ManageWishlistComponent } from './pages/manage-wishlist/manage-wishlist.component';
+import { GiftsListComponent } from './pages/gifts-list/gifts-list.component';
 
 
 @NgModule({
@@ -21,11 +23,13 @@ import { ManageWishlistComponent } from './pages/manage-wishlist/manage-wishlist
     ListComponent,
     WishlistCardComponent,
     MyGiftsComponent,
-    ManageWishlistComponent
+    ManageWishlistComponent,
+    GiftsListComponent
   ],
   imports: [
     CommonModule,
-    WishlistRoutingModule
+    WishlistRoutingModule,
+    FormsModule
   ]
 })
 export class WishlistModule { }
