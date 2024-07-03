@@ -25,7 +25,7 @@ import static com.cimba.lazurite.wishlist.WishlistSpecification.withOwnerId;
 public class WishlistService {
     private final WishlistRepository wishlistRepository;
     private final WishlistMapper wishlistMapper;
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
     public Long save(WishlistRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
