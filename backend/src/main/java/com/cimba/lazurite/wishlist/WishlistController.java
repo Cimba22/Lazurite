@@ -68,4 +68,13 @@ public class WishlistController {
         service.uploadWishlistCoverPicture(file, connectedUser, wishlistId);
         return ResponseEntity.accepted().build();
     }
+
+    @DeleteMapping("{wishlist-id}")
+    public ResponseEntity<?> deleteWishlist(
+            @PathVariable("wishlist-id") Long id,
+            Authentication connectedUser
+    ) {
+        service.deleteWishlist(id, connectedUser);
+        return ResponseEntity.noContent().build();
+    }
 }

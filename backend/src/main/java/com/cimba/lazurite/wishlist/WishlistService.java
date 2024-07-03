@@ -5,7 +5,6 @@ import com.cimba.lazurite.entity.Wishlist;
 import com.cimba.lazurite.file.FileStorageService;
 import com.cimba.lazurite.repository.WishlistRepository;
 import com.cimba.lazurite.entity.common.PageResponse;
-import jakarta.mail.internet.MimeBodyPart;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -101,5 +100,19 @@ public class WishlistService {
             wishlist.setDescription(request.description());
         }
         return null;
+    }
+
+    public void deleteWishlist(Long id, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Wishlist wishlist = wishlistRepository.findById(id)
+                .orElseThrow(() ->
+                    new EntityNotFoundException("No wishlist found with the ID: " + id));
+
+        if (!wishlist.getOwner().getIdUser().equals(user.getIdUser())) {
+            throw new AccessDeniedException("You are not the owner of this wishlist");
+        }
+
+        wishlistRepository.delete(wishlist);
+
     }
 }
