@@ -142,5 +142,29 @@ public class WishlistService {
         wishlistRepository.save(wishlist);
     }
 
+    public void removeMemberFromWishlist(Long wishlistId, Long userId, Authentication connectedUser) {
+        User owner = (User) connectedUser.getPrincipal();
+
+        // Проверка наличия списка
+        Wishlist wishlist = wishlistRepository.findById(wishlistId)
+                .orElseThrow(() ->
+                    new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+
+        if (!wishlist.getOwner().getIdUser().equals(owner.getIdUser())) {
+            throw new AccessDeniedException("You are not the owner of this wishlist");
+        }
+
+        User member = userRepository.findById(userId)
+                .orElseThrow(() ->
+                    new EntityNotFoundException("No user found with the ID: " + userId));
+
+        if (!wishlist.getMembers().contains(member)) {
+            throw new IllegalStateException("User is not a member of this wishlist");
+        }
+
+        wishlist.getMembers().remove(member);
+        wishlistRepository.save(wishlist);
+    }
+
 
 }

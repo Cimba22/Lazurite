@@ -70,6 +70,16 @@ public class WishlistController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("{wishlist-id}/members")
+    public ResponseEntity<?> removeMemberFromWishlist(
+            @PathVariable("wishlist-id") Long wishlistId,
+            @RequestParam("user-id") Long userId,
+            Authentication connectedUser
+    ) {
+        service.removeMemberFromWishlist(wishlistId, userId, connectedUser);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 
