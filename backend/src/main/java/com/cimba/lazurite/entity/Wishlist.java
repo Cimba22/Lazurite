@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -30,6 +32,14 @@ public class Wishlist extends BaseEntity {
 
     @OneToMany(mappedBy = "wishlist")
     private List<Gift> gifts;
+
+    @ManyToMany
+    @JoinTable(
+            name = "wishlist_members",
+            joinColumns = @JoinColumn(name = "wishlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> members = new HashSet<>();
 
 
 }

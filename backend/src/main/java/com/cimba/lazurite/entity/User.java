@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -55,6 +57,9 @@ public class User implements UserDetails, Principal {
     private List<Wishlist> wishlists;
     @OneToMany(mappedBy = "owner")
     private List<Gift> gifts;
+    @ManyToMany(mappedBy = "members")
+    private Set<Wishlist> wishlistsMemberOf = new HashSet<>();
+
 
 
     @Override
