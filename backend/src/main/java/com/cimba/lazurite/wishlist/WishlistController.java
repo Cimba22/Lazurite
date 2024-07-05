@@ -10,8 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("wishlists")
 @RequiredArgsConstructor
@@ -40,7 +38,6 @@ public class WishlistController {
     public ResponseEntity<WishlistResponse> findWishlistById(@PathVariable("wishlist-id") Long id){
         return ResponseEntity.ok(service.findById(id));
     }
-
 
     @GetMapping
     public ResponseEntity<PageResponse<WishlistResponse>> findAllWishlists(
@@ -89,8 +86,6 @@ public class WishlistController {
     ) {
         return ResponseEntity.ok(service.findWishlistMembers(page, size, wishlistId, connectedUser));
     }
-
-
 
     @PostMapping(value = "/cover/{wishlist-id}", consumes = "multipart/form-data")
     public ResponseEntity<?> uploadWishlistCoverPicture(
