@@ -3,6 +3,7 @@ package com.cimba.lazurite.wishlist;
 import com.cimba.lazurite.entity.User;
 import com.cimba.lazurite.entity.Wishlist;
 import com.cimba.lazurite.file.FileStorageService;
+import com.cimba.lazurite.repository.UserRepository;
 import com.cimba.lazurite.repository.WishlistRepository;
 import com.cimba.lazurite.entity.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class WishlistService {
     private final WishlistRepository wishlistRepository;
     private final WishlistMapper wishlistMapper;
     private final FileStorageService fileStorageService;
+    private final UserRepository userRepository;
 
     public Long save(WishlistRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
@@ -115,4 +117,30 @@ public class WishlistService {
         wishlistRepository.delete(wishlist);
 
     }
+
+    public void addMemberToWishlist(Long wishlistId, Long userId, Authentication connectedUser) {
+        User owner = (User) connectedUser.getPrincipal();
+
+        Wishlist wishlist = wishlistRepository.findById(wishlistId)
+                .orElseThrow(() ->
+                     new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+
+        if (!wishlist.getOwner().getIdUser().equals(owner.getIdUser())) {
+            throw new AccessDeniedException("You are not the owner of this wishlist");
+        }
+
+        User member = userRepository.findById(userId)
+                .orElseThrow(() ->
+                    new EntityNotFoundException("No user found with the ID: " + userId));
+
+        // Проверка, что пользователь еще не является участником
+        if (wishlist.getMembers().contains(member)) {
+            throw new IllegalStateException("User is already a member of this wishlist");
+        }
+
+        wishlist.getMembers().add(member);
+        wishlistRepository.save(wishlist);
+    }
+
+
 }
