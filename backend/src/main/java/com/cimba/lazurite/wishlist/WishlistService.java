@@ -28,6 +28,7 @@ public class WishlistService {
     private final WishlistMapper wishlistMapper;
     private final FileStorageService fileStorageService;
     private final UserRepository userRepository;
+    private final MemberMapping memberMapper;
 
     public Long save(WishlistRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
@@ -108,7 +109,7 @@ public class WishlistService {
         User user = (User) connectedUser.getPrincipal();
         Wishlist wishlist = wishlistRepository.findById(id)
                 .orElseThrow(() ->
-                    new EntityNotFoundException("No wishlist found with the ID: " + id));
+                        new EntityNotFoundException("No wishlist found with the ID: " + id));
 
         if (!wishlist.getOwner().getIdUser().equals(user.getIdUser())) {
             throw new AccessDeniedException("You are not the owner of this wishlist");
@@ -123,7 +124,7 @@ public class WishlistService {
 
         Wishlist wishlist = wishlistRepository.findById(wishlistId)
                 .orElseThrow(() ->
-                     new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+                        new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
 
         if (!wishlist.getOwner().getIdUser().equals(owner.getIdUser())) {
             throw new AccessDeniedException("You are not the owner of this wishlist");
@@ -131,7 +132,7 @@ public class WishlistService {
 
         User member = userRepository.findById(userId)
                 .orElseThrow(() ->
-                    new EntityNotFoundException("No user found with the ID: " + userId));
+                        new EntityNotFoundException("No user found with the ID: " + userId));
 
         // Проверка, что пользователь еще не является участником
         if (wishlist.getMembers().contains(member)) {
@@ -148,7 +149,7 @@ public class WishlistService {
         // Проверка наличия списка
         Wishlist wishlist = wishlistRepository.findById(wishlistId)
                 .orElseThrow(() ->
-                    new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
+                        new EntityNotFoundException("No wishlist found with the ID: " + wishlistId));
 
         if (!wishlist.getOwner().getIdUser().equals(owner.getIdUser())) {
             throw new AccessDeniedException("You are not the owner of this wishlist");
@@ -156,7 +157,7 @@ public class WishlistService {
 
         User member = userRepository.findById(userId)
                 .orElseThrow(() ->
-                    new EntityNotFoundException("No user found with the ID: " + userId));
+                        new EntityNotFoundException("No user found with the ID: " + userId));
 
         if (!wishlist.getMembers().contains(member)) {
             throw new IllegalStateException("User is not a member of this wishlist");
@@ -166,5 +167,21 @@ public class WishlistService {
         wishlistRepository.save(wishlist);
     }
 
-
+    public PageResponse<MemberResponse> findWishlistMembers(int page, int size, Long wishlistId, Authentication connectedUser) {
+        User user = ((User) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<User> members = userRepository.findMembersByWishlistId(wishlistId, pageable);
+        List<MemberResponse> memberResponses = members.stream()
+                .map(memberMapper::toMemberResponse)
+                .toList();
+        return new PageResponse<>(
+                memberResponses,
+                members.getNumber(),
+                members.getSize(),
+                members.getTotalElements(),
+                members.getTotalPages(),
+                members.isFirst(),
+                members.isLast()
+        );
+    }
 }

@@ -80,7 +80,15 @@ public class WishlistController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @GetMapping("{wishlist-id}/members")
+    public ResponseEntity<PageResponse<MemberResponse>> findWishlistMembers(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            @PathVariable("wishlist-id") Long wishlistId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(service.findWishlistMembers(page, size, wishlistId, connectedUser));
+    }
 
 
 
